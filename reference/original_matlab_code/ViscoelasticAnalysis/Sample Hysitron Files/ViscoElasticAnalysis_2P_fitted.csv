@@ -1,0 +1,18 @@
+FigNum, RSquare, Pmax, HmaxAv, Strain, RiseTime,  C0[kPa], C1[kPa], T1[s], C2[kPa], T2[s],  G0[kPa], Ginf[kPa], Er[kPa], Ginf/G0,  filename
+-, 0.9904, 1.977586e+02, 4.494012e+03, 0.027433, 19.88, 4.210785e+02, 3.701713e+02, 1.375467, 6.147456e+01, 32.816615,  426.362170, 210.539265, 1705.448681, 0.496435,  average
+-, 0.0012, 8.845168e+00, 1.352032e-01, 0.000000, 0.00, 1.927655e+01, 6.951988e+01, 0.241381, 5.770635e+00, 2.732027,  44.077592, 9.638275, 176.310367, 0.035038,  std dev
+1.000000, 0.9913, 2.044184e+02, 4.493816e+03, 0.027433, 19.88, 4.334560e+02, 3.956755e+02, 1.278312, 6.710964e+01, 33.253601,  448.120566, 216.727977, 1792.482262, 0.483638,  /Users/DanStrange/Dropbox/Eng Work/ViscoelasticAnalysis/Sample Hysitron Files/Test4tr20th60_2_001 DC.txt
+2.000000, 0.9886, 1.934613e+02, 4.494089e+03, 0.027433, 19.88, 4.172833e+02, 4.137933e+02, 1.203469, 5.439916e+01, 29.955395,  442.737845, 208.641625, 1770.951380, 0.471253,  /Users/DanStrange/Dropbox/Eng Work/ViscoelasticAnalysis/Sample Hysitron Files/Test4tr20th60_2_002 DC.txt
+3.000000, 0.9906, 1.873823e+02, 4.494112e+03, 0.027433, 19.88, 3.954529e+02, 2.664833e+02, 1.733147, 5.927514e+01, 36.382019,  360.605692, 197.726461, 1442.422770, 0.548318,  /Users/DanStrange/Dropbox/Eng Work/ViscoelasticAnalysis/Sample Hysitron Files/Test4tr20th60_2_003 DC.txt
+4.000000, 0.9910, 2.057725e+02, 4.494033e+03, 0.027433, 19.88, 4.381220e+02, 4.047329e+02, 1.286942, 6.511430e+01, 31.675444,  453.984578, 219.060997, 1815.938312, 0.482530,  /Users/DanStrange/Dropbox/Eng Work/ViscoelasticAnalysis/Sample Hysitron Files/Testtr20th60_2_000 DC.txt
+
+
+
+
+
+, , , Options 
+, , , Instrument, Nanoindenter 
+, , , Tip Type, Sphere 
+, , , Indenter Radius, 238860.000000  
+, , , Control, Displacement  
+, , , Comments:, write a comment here 

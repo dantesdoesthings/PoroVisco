@@ -1,0 +1,18 @@
+FigNum, RSquare, Pmax, HmaxAv, Strain, RiseTime,  C0[kPa], C1[kPa], T1[s], C2[kPa], T2[s],  G0[kPa], Ginf[kPa], Er[kPa], Ginf/G0,  filename
+-, 0.9997, 1.319975e-001, 5.003086e-001, 0.081675, 10.00, 1.894083e+001, 3.417286e+001, 9.412077, 4.249335e+001, 61.413321,  47.803519, 9.470414, 191.214076, 0.198904,  average
+-, 0.0001, 1.363211e-002, 3.145597e-004, 0.000026, 0.00, 1.684392e+000, 5.086489e+000, 0.993956, 5.059716e+000, 2.669467,  5.165020, 0.842196, 20.660082, 0.016095,  std dev
+1.000000, 0.9997, 1.351600e-001, 5.005654e-001, 0.081696, 10.00, 1.975334e+001, 3.392452e+001, 10.278883, 4.236246e+001, 63.797824,  48.020159, 9.876670, 192.080637, 0.205678,  C:\Users\Dan\Documents\My Dropbox\To share with Group\OYENLAB-GroupResources\Matlab codes\Dan's Viscoelastic Code\ViscoelasticAnalysis\Sample Instron Files/Specimen_RawData_1.csv
+2.000000, 0.9998, 1.487300e-001, 4.999332e-001, 0.081644, 10.00, 2.089512e+001, 3.738006e+001, 9.432725, 4.945850e+001, 57.944596,  53.866835, 10.447559, 215.467342, 0.193952,  C:\Users\Dan\Documents\My Dropbox\To share with Group\OYENLAB-GroupResources\Matlab codes\Dan's Viscoelastic Code\ViscoelasticAnalysis\Sample Instron Files/Specimen_RawData_2.csv
+3.000000, 0.9996, 1.279500e-001, 5.001641e-001, 0.081663, 10.00, 1.723765e+001, 3.830111e+001, 8.014862, 4.064437e+001, 60.715978,  48.091561, 8.618824, 192.366244, 0.179217,  C:\Users\Dan\Documents\My Dropbox\To share with Group\OYENLAB-GroupResources\Matlab codes\Dan's Viscoelastic Code\ViscoelasticAnalysis\Sample Instron Files/Specimen_RawData_3.csv
+4.000000, 0.9998, 1.161500e-001, 5.005715e-001, 0.081696, 10.00, 1.787721e+001, 2.708577e+001, 9.921837, 3.750807e+001, 63.194885,  41.235521, 8.938604, 164.942083, 0.216770,  C:\Users\Dan\Documents\My Dropbox\To share with Group\OYENLAB-GroupResources\Matlab codes\Dan's Viscoelastic Code\ViscoelasticAnalysis\Sample Instron Files/Specimen_RawData_4.csv
+
+
+
+
+
+, , , Options 
+, , , Instrument, Instron 
+, , , Tip Type, Sphere 
+, , , Indenter Radius, 3.000000  
+, , , Control, Displacement  
+, , , Comments:, write a comment here 

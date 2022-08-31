@@ -1,0 +1,23 @@
+%by Matteo Galli
+function errvect=OBJVisLoadC3P(X,expdata,Xguess,riseTime,rate,a,m)
+    numParam = (length(Xguess)-1)/2;
+    C0 =X(1)*Xguess(1);
+    C = X(2:numParam + 1).*Xguess(2:numParam + 1);
+    T = X(numParam + 2:length(Xguess)).*Xguess(numParam + 2:length(Xguess));
+    fit=[];
+    for k=1:length(expdata(:,1))
+        if expdata(k,1)<riseTime
+            fit(k)=(1/a)^(1/m)*(C0*rate*expdata(k,1)-sum(C.*T.*rate.*(1-exp(-expdata(k,1)./T))))^(1/m);
+        end
+        if expdata(k,1)>=riseTime
+            fit(k)=(1/a)^(1/m)*(C0*rate*riseTime-sum(C.*T.*rate.*exp(-expdata(k,1)./T).*(exp(riseTime./T)-1)))^(1/m);
+        end
+    end
+  errvect=(fit'-expdata(:,2))/mean(expdata(:,2));
+ 
+          
+%      figure(1)
+%       subplot(2,1,1);plot(expdata(:,1),expdata(:,2),'k.',expdata(:,1),fit(:),'b-');
+%        subplot(2,1,2);bar(expdata(:,1),errvect);
+
+    

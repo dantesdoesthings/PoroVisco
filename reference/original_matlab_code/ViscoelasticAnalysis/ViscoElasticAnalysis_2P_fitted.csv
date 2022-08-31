@@ -1,0 +1,18 @@
+FigNum, RSquare, Pmax, HmaxAv, Strain, RiseTime,  C0[kPa], C1[kPa], T1[s], C2[kPa], T2[s],  G0[kPa], Ginf[kPa], Er[kPa], Ginf/G0,  filename
+-, 0.9997, 1.319975e-001, 5.003086e-001, 0.050172, 10.00, 1.163523e+001, 2.099224e+001, 9.412247, 2.610334e+001, 61.413798,  29.365407, 5.817615, 117.461630, 0.198904,  average
+-, 0.0001, 1.363211e-002, 3.145597e-004, 0.000016, 0.00, 1.034738e+000, 3.124567e+000, 0.994068, 3.108305e+000, 2.669885,  3.172948, 0.517369, 12.691790, 0.016095,  std dev
+1.000000, 0.9997, 1.351600e-001, 5.005654e-001, 0.050185, 10.00, 1.213438e+001, 2.083967e+001, 10.278883, 2.602305e+001, 63.797825,  29.498549, 6.067190, 117.994196, 0.205678,  C:\Users\Tom\Dropbox\Shareable\OYENLAB-GroupResources\Matlab codes\Dan's Viscoelastic Code\ViscoelasticAnalysis/Sample Instron Files/Specimen_RawData_1.csv
+2.000000, 0.9998, 1.487300e-001, 4.999332e-001, 0.050154, 10.00, 1.283577e+001, 2.296239e+001, 9.432726, 3.038211e+001, 57.944598,  33.090133, 6.417884, 132.360534, 0.193952,  C:\Users\Tom\Dropbox\Shareable\OYENLAB-GroupResources\Matlab codes\Dan's Viscoelastic Code\ViscoelasticAnalysis/Sample Instron Files/Specimen_RawData_2.csv
+3.000000, 0.9996, 1.279500e-001, 5.001641e-001, 0.050165, 10.00, 1.058900e+001, 2.352818e+001, 8.014869, 2.496763e+001, 60.715998,  29.542406, 5.294501, 118.169625, 0.179217,  C:\Users\Tom\Dropbox\Shareable\OYENLAB-GroupResources\Matlab codes\Dan's Viscoelastic Code\ViscoelasticAnalysis/Sample Instron Files/Specimen_RawData_3.csv
+4.000000, 0.9998, 1.161500e-001, 5.005715e-001, 0.050186, 10.00, 1.098177e+001, 1.663873e+001, 9.922511, 2.304058e+001, 63.196773,  25.330541, 5.490885, 101.322163, 0.216769,  C:\Users\Tom\Dropbox\Shareable\OYENLAB-GroupResources\Matlab codes\Dan's Viscoelastic Code\ViscoelasticAnalysis/Sample Instron Files/Specimen_RawData_4.csv
+
+
+
+
+
+, , , Options 
+, , , Instrument, Instron 
+, , , Tip Type, Sphere 
+, , , Indenter Radius, 7.950000  
+, , , Control, Displacement  
+, , , Comments:, write a comment here 
