@@ -1,6 +1,6 @@
 import pandas as pd
 
-from utils import read_input, poro_visco_elastic_model
+from utils import read_input, poro_visco_elastic_model, plot_results
 
 
 def main():
@@ -8,8 +8,11 @@ def main():
     radius = 12.7e-3
     input_file_name = '../reference/datasets/0.2per alg gel em 08112022 111747_tdf.CSV'
     output_file_name = 'test.csv'
+    figure_file_name = 'test.png'
+    show_figure = False
     save_figure = False
-    # Start calculations #####
+
+    # Start calculations
     # Separate the ramp and relax times
     start_index = 50  # The blank row in the input data, "index" in the old matlab code
     elapsed, load, disp = read_input(input_file_name)
@@ -18,10 +21,26 @@ def main():
     # Run the calcs
     plot_flag = 1
     i = 1  # Loop through all the files, TODO: Remove, deal with how the old code ran multiple files at once
-    legend = ['G0 (kPa)','E0 (kPa)','Ginf (kPa)','Einf (kPa)','Ginf/G0','T1','T2','R-SQ, VISCO','G (kPa)','E (kPa)','nu','k (m^2)','D (m^2/s)','R-SQ, PORO', 'R-SQ, PVE']
-    pp1, pp2, fit = poro_visco_elastic_model(
+    legend = ['G0 (kPa)',
+              'E0 (kPa)',
+              'Ginf (kPa)',
+              'Einf (kPa)',
+              'Ginf/G0',
+              'T1',
+              'T2',
+              'R-SQ, VISCO',
+              'G (kPa)',
+              'E (kPa)',
+              'nu',
+              'k (m^2)',
+              'D (m^2/s)',
+              'R-SQ, PORO',
+              'R-SQ, PVE']
+    pp1, pp2, fit, exp_decay = poro_visco_elastic_model(
         elapsed, load, disp,
         radius, ramp_time, hold_time, plot_flag, i, legend, start_index)
+
+    # Gather and save the results
     result_df1 = pd.DataFrame({
         'G0 (kPa)': pp1[0],
         'E0 (kPa)': pp1[1],
@@ -40,6 +59,7 @@ def main():
         'R-SQ, PVE': pp2[6]
     }, index=[0])
     result_df1.to_csv(output_file_name, index=None)
+    plot_results(elapsed, load, fit, exp_decay, show_figure, save_figure, figure_file_name)
 
 
 if __name__ == '__main__':

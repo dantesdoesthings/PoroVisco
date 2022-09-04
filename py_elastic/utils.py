@@ -1,10 +1,12 @@
 import numpy as np
 import pandas as pd
-from scipy.optimize import least_squares
+from scipy.optimize import least_squares, curve_fit
+import matplotlib.pyplot as plt
+from matplotlib.figure import Figure
 
 
 def read_input(input_file_name: str):
-    skip_rows = list(range(52)) + [53, 104]  # Which rows to skip: First 52 are other data, the 2 others are junk
+    skip_rows = list(range(52)) + list(range(53, 105))  # Which rows to skip
     col_names_original = ['Elapsed Time ', 'Load 2 ', 'Disp     ']
     col_names_rename = {
         'Elapsed Time ': 'elapsed',
@@ -83,8 +85,9 @@ def poro_visco_elastic_model(elapsed: np.ndarray,
     # options.optim = optimset('MaxFunEvals', 500000, 'Display', 'none', 'TolX', 1E-30);
     # X = lsqnonlin( @ OBJPoroVisco_mri, X0, LB, UB, options.optim, DT, Xguess, rampTime, hmax, av, m, R);
     opt_result = least_squares(poro_visco_optimization, x0, bounds=[lower_bound, upper_bound],
-                               args=[elapsed, load, disp, x_guess, ramp_time, hmax, av, m, radius],
+                               args=[elapsed, load, x_guess, ramp_time, hmax, av, m, radius],
                                max_nfev=500000, xtol=1e-30)
+    exp_decay_result, _ = curve_fit(exp_decay_function, elapsed, load, bounds=(0, np.inf))
     x = opt_result.x
 
     # Poroelastic parameter estimation
@@ -107,9 +110,8 @@ def poro_visco_elastic_model(elapsed: np.ndarray,
     c1 = c[0] / rcf[0]
     c2 = c[1] / rcf[1]
     g0 = (c0 + np.sum(c)) / 2
-    e0 = 2 * g0 * 1.5
+    e0, e_inf = exp_decay_function(np.array([elapsed[0], elapsed[-1]*100]), *exp_decay_result)
     g_inf = c0 / 2
-    e_inf = 2 * g_inf * 1.5
     tau1 = t
 
     # Load relaxation data
@@ -134,7 +136,8 @@ def poro_visco_elastic_model(elapsed: np.ndarray,
     pp2 = [G / 1000, e / 1000, v, kappa, d_id, rsq_poro, rsq_both]
 
     # PLOT
-    return pp1, pp2, fit
+    return pp1, pp2, fit, exp_decay_result
+
 
 def coefficient_determination(experimental_data: np.ndarray,
                               fit_data: np.ndarray,
@@ -155,7 +158,6 @@ def coefficient_determination(experimental_data: np.ndarray,
 def poro_visco_optimization(x,
                             elapsed,
                             load,
-                            disp,
                             x_guess,
                             rise_time,
                             hmax,
@@ -197,6 +199,32 @@ def poro_visco_optimization(x,
     if (g - g0) / g0 > 0.05:
         err_vect *= 1e6
     return err_vect
+
+
+def exp_decay_function(x: np.ndarray, a: float, b: float, c: float):
+    result = a * np.exp(-b * x) + c
+    return result
+
+
+def plot_results(time_vals: np.ndarray,
+                 point_data: np.ndarray,
+                 line_data: np.ndarray,
+                 exp_decay_result: np.ndarray,
+                 show_plot: bool = False,
+                 save_plot: bool = False,
+                 plot_path: str = 'ResultPlot.png'):
+    fig = plt.figure()  # type: Figure
+    p1 = fig.add_subplot()
+    p1.set_ylabel('load')
+    p1.set_xlabel('elapsed time')
+    p1.plot(time_vals, point_data, 'o', color='#004466', label='original data')
+    p1.plot(time_vals, line_data, '-g', label='logarithmic fit (original)')
+    p1.plot(time_vals, exp_decay_function(time_vals, *exp_decay_result), '-r', label='exponential decay fit')
+    p1.legend()
+    if show_plot:
+        plt.show()
+    if save_plot:
+        plt.savefig(plot_path)
 
 
 def serialize(obj):
