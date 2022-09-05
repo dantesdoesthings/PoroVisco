@@ -6,10 +6,11 @@ from utils import read_input, poro_visco_elastic_model, plot_results
 def main():
     # Parameters
     radius = 12.7e-3
-    input_file_name = '../reference/datasets/0.2per alg gel em 08112022 111747_tdf.CSV'
+    # input_file_name = '../reference/datasets/0.2per alg gel em 08112022 111747_tdf.CSV'
+    input_file_name = '../reference/datasets/agae1per1-08232022-011721_tdf.csv'  # e0 should be 74, e_inf should be 42
     output_file_name = 'test.csv'
     figure_file_name = 'test.png'
-    show_figure = False
+    show_figure = True
     save_figure = False
 
     # Start calculations
@@ -38,7 +39,7 @@ def main():
               'R-SQ, PVE']
     pp1, pp2, fit, exp_decay = poro_visco_elastic_model(
         elapsed, load, disp,
-        radius, ramp_time, hold_time, plot_flag, i, legend, start_index)
+        radius, ramp_time, hold_time)
 
     # Gather and save the results
     result_df1 = pd.DataFrame({

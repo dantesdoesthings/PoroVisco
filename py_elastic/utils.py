@@ -30,25 +30,19 @@ def poro_visco_elastic_model(elapsed: np.ndarray,
                              disp: np.ndarray,
                              radius,
                              ramp_time,
-                             hold_time,
-                             plot_flag,
-                             i,
-                             leg,
-                             dwellid):
+                             hold_time):
     # Stats from the input
-    hmax = abs(disp[dwellid])
-    pmax = load[dwellid]
+    hmax = abs(disp[0])
     # Parameters
     m = 1.5
     av = 8 * radius**0.5 / 3
     ap = (radius * hmax)**0.5
     # Poroelastic Initialization
-    p0_guess = load[1]
+    p0_guess = load[0]
     p_inf_guess = load[-1]
     g_guess = 3*p0_guess/(16 * hmax * ap)
     v_guess = 1 - (p0_guess / (2 * p_inf_guess))
     kappa_guess = 1e-14
-    log_kappa_guess = np.log10(kappa_guess)
     d_guess = (2 * (1 - v_guess) / (1 - 2 * v_guess)) * g_guess * kappa_guess
     log_d_guess = np.log10(d_guess)
 
@@ -69,7 +63,6 @@ def poro_visco_elastic_model(elapsed: np.ndarray,
     num_params = 2
     c0_guess = load[-1] / (hmax**m * av)
     c_guess = c0_guess * np.ones(num_params)
-    g_guess = (c0_guess + np.sum(c_guess)) / 2
     t_guess = [ramp_time, hold_time]
     x02 = np.ones([2 * num_params + 1])
     xg2 = np.concatenate([[c0_guess], c_guess, t_guess])
@@ -87,7 +80,8 @@ def poro_visco_elastic_model(elapsed: np.ndarray,
     opt_result = least_squares(poro_visco_optimization, x0, bounds=[lower_bound, upper_bound],
                                args=[elapsed, load, x_guess, ramp_time, hmax, av, m, radius],
                                max_nfev=500000, xtol=1e-30)
-    exp_decay_result, _ = curve_fit(exp_decay_function, elapsed, load, bounds=(0, np.inf))
+    exp_decay_result, _ = curve_fit(exp_decay_function, elapsed, load, bounds=(0, [np.inf, np.inf, 2 * load[-1]]))
+    print(exp_decay_result)
     x = opt_result.x
 
     # Poroelastic parameter estimation
@@ -110,7 +104,8 @@ def poro_visco_elastic_model(elapsed: np.ndarray,
     c1 = c[0] / rcf[0]
     c2 = c[1] / rcf[1]
     g0 = (c0 + np.sum(c)) / 2
-    e0, e_inf = exp_decay_function(np.array([elapsed[0], elapsed[-1]*100]), *exp_decay_result)
+    e0 = exp_decay_function(np.array([0]), *exp_decay_result)
+    e_inf = exp_decay_result[2]
     g_inf = c0 / 2
     tau1 = t
 
