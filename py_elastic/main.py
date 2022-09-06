@@ -1,4 +1,5 @@
 import pandas as pd
+from pathlib import Path
 
 from utils import read_input, poro_visco_elastic_model, plot_results
 
@@ -7,7 +8,7 @@ def main():
     # Parameters to set
     radius = 5.5
     # input_file_name = '../reference/datasets/0.2per alg gel em 08112022 111747_tdf.CSV'
-    input_file_name = '../reference/datasets/agae1per1-08232022-011721_tdf.csv'  # e0 should be 74, e_inf should be 42
+    input_file_name = Path('../reference/datasets/agae1per1-08232022-011721_tdf.csv')  # e0 should be 74, e_inf should be 42
     output_file_name = 'test.csv'
     figure_file_name = 'test.png'
     show_figure = True
