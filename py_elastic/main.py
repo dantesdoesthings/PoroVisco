@@ -7,12 +7,12 @@ from utils import read_input, poro_visco_elastic_model, plot_results
 def main():
     # Parameters to set
     radius = 5.5
-    # input_file_name = '../reference/datasets/0.2per alg gel em 08112022 111747_tdf.CSV'
-    input_file_name = Path('../reference/datasets/agae1per1-08232022-011721_tdf.csv')  # e0 should be 74, e_inf should be 42
-    output_file_name = 'test.csv'
-    figure_file_name = 'test.png'
+    # input_file_name = '../reference/datasets/agar02per2.CSV'
+    input_file_name = ("C://Users//omnen//Documents//Oyen lab//Indentation data//20220831//low percent//agar02per1 08312022 104921_tdf.CSV") 
+    output_file_name = 'alg02per1.csv'
+    figure_file_name = 'alg02per1.png'
     show_figure = True
-    save_figure = False
+    save_figure = True
 
     # Start calculations
     # Separate the ramp and relax times
@@ -66,3 +66,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+Print("Sucuess!")
