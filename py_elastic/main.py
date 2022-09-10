@@ -1,70 +1,72 @@
-import pandas as pd
+import glob
 from pathlib import Path
+import os
 
-from utils import read_input, poro_visco_elastic_model, plot_results
+import pandas as pd
+
+from utils import run_analysis_for_file
 
 
 def main():
+    file_or_dir = 'file'   # Set this to 'file' or to 'dir' for file or full directory of CSV files.
+
     # Parameters to set
-    radius = 5.5
-    # input_file_name = '../reference/datasets/agar02per2.CSV'
-    input_file_name = ("C://Users//omnen//Documents//Oyen lab//Indentation data//20220831//low percent//agar02per1 08312022 104921_tdf.CSV") 
-    output_file_name = 'alg02per1.csv'
-    figure_file_name = 'alg02per1.png'
-    show_figure = True
-    save_figure = True
+    radius = 5.5  # Radius, r, in millimeters
+    indent_depth = 1.21  # Indent depth, h, in millimeters
 
-    # Start calculations
-    # Separate the ramp and relax times
-    start_index = 50  # The blank row in the input data, "index" in the old matlab code
-    elapsed, load, disp = read_input(input_file_name)
-    ramp_time = elapsed[start_index] - elapsed[0]
-    hold_time = elapsed[-1] - elapsed[start_index]
-    # Run the calcs
-    plot_flag = 1
-    i = 1  # Loop through all the files, TODO: Remove, deal with how the old code ran multiple files at once
-    legend = ['G0 (kPa)',
-              'E0 (kPa)',
-              'Ginf (kPa)',
-              'Einf (kPa)',
-              'Ginf/G0',
-              'T1',
-              'T2',
-              'R-SQ, VISCO',
-              'G (kPa)',
-              'E (kPa)',
-              'nu',
-              'k (m^2)',
-              'D (m^2/s)',
-              'R-SQ, PORO',
-              'R-SQ, PVE']
-    pp1, pp2, fit, exp_decay = poro_visco_elastic_model(
-        elapsed, load, disp,
-        radius, ramp_time, hold_time)
+    if file_or_dir == 'file':
+        # Settings
+        input_file_name = Path('../reference/datasets/agae1per1-08232022-011721_tdf.csv')
+        output_file_name = 'test.csv'
+        figure_file_name = 'test.png'
+        show_figure = True
+        save_figure = True
 
-    # Gather and save the results
-    result_df1 = pd.DataFrame({
-        'G0 (kPa)': pp1[0],
-        'E0 (kPa)': pp1[1],
-        'Ginf (kPa)': pp1[2],
-        'Einf (kPa)': pp1[3],
-        'Ginf/G0': pp1[4],
-        'T1': pp1[5],
-        'T2': pp1[6],
-        'R-SQ, VISCO': pp1[7],
-        'G (kPa)': pp2[0],
-        'E (kPa)': pp2[1],
-        'nu': pp2[2],
-        'k (m^2)': pp2[3],
-        'D (m^2/s)': pp2[4],
-        'R-SQ, PORO': pp2[5],
-        'R-SQ, PVE': pp2[6]
-    }, index=[0])
-    result_df1.to_csv(output_file_name, index=None)
-    plot_results(elapsed, load, fit, exp_decay, show_figure, save_figure, figure_file_name)
+        run_analysis_for_file(input_file_name,
+                              output_file_name,
+                              show_figure,
+                              save_figure,
+                              figure_file_name,
+                              radius,
+                              indent_depth)
+    elif file_or_dir == 'dir':
+        input_dir = Path('C:/dev/repos/personal/EricaMatlab/reference/datasets')
+        output_dir = Path('C:/dev/repos/personal/EricaMatlab/reference/test_output')
+        figure_file_name_base = 'fig'
+        show_figure = True
+        save_figure = True
+        if not output_dir.exists():
+            try:
+                os.mkdir(output_dir)
+            except Exception as e:
+                print(f'ERROR: The output directory specified, {output_dir} does not exist '
+                      f'and python does not have permissions to create it.')
+                raise e
+        input_files = glob.glob('*.csv', root_dir=input_dir)
+        for input_file in input_files:
+            base_name = input_file.lower().strip('.csv')
+            in_path = input_dir / input_file
+            out_path = output_dir / (base_name + '_result.csv')
+            fig_path = output_dir / (figure_file_name_base + '_' + base_name + '.png')
+            print(f'Running analysis for {in_path}')
+            try:
+                run_analysis_for_file(in_path,
+                                      out_path,
+                                      show_figure,
+                                      save_figure,
+                                      fig_path,
+                                      radius,
+                                      indent_depth)
+                print(f'Results saved to {out_path}')
+            except pd.errors.EmptyDataError as e:
+                print(f'Unexpected error occurred for this file: {e}')
+
+    else:
+        raise ValueError('the file_or_dir variable should be set to \'file\' or \'dir\'. '
+                         f'Instead it has value {file_or_dir=}')
 
 
 if __name__ == '__main__':
     main()
 
-Print("Sucuess!")
+print("Success!")
