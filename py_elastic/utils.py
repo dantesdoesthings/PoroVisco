@@ -6,7 +6,7 @@ from matplotlib.figure import Figure
 
 
 def read_input(input_file_name: str):
-    skip_rows = list(range(52)) + list(range(53, 105))  # Which rows to skip
+    skip_rows = list(range(52)) + list(range(53, 105))  # Which rows to skip ADJUSTED TO FOR 9.17.20 (Removed)
     col_names_original = ['Elapsed Time ', 'Load 2 ', 'Disp     ']
     col_names_rename = {
         'Elapsed Time ': 'elapsed',
@@ -70,13 +70,14 @@ def poro_visco_elastic_model(elapsed: np.ndarray,
     upper_bound2 = [1, 1, 1, 1, 1]
 
     # Opt run
-    x0 = np.concatenate([x01, x02])
     x_guess = np.concatenate([xg1, xg2])
     lower_bound = np.concatenate([lower_bound1, lower_bound2])
     upper_bound = np.concatenate([upper_bound1, upper_bound2])
+    x0 = (lower_bound + upper_bound)/2 #Redefined upper bounds and lower bounds to be averaged (remove x0 bound error)
     # print(type(x0), type(elapsed), type(load), type(disp), type(x_guess), type(ramp_time), type(hmax), type(av), type(m), type(radius))
     # options.optim = optimset('MaxFunEvals', 500000, 'Display', 'none', 'TolX', 1E-30);
     # X = lsqnonlin( @ OBJPoroVisco_mri, X0, LB, UB, options.optim, DT, Xguess, rampTime, hmax, av, m, R);
+    #ERICA ERROR LOG: "Each lower bound must be less than 0". Zeros in data from lack of force, change in data file to -0.0001
     opt_result = least_squares(poro_visco_optimization, x0, bounds=[lower_bound, upper_bound],
                                args=[elapsed, load, x_guess, ramp_time, hmax, av, m, radius],
                                max_nfev=500000, xtol=1e-30)
