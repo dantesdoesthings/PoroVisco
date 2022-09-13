@@ -11,7 +11,7 @@ def main():
     file_or_dir = 'file'   # Set this to 'file' or to 'dir' for file or full directory of CSV files.
 
     # Parameters to set
-    radius = 5.5  # Radius, r, in millimeters
+    radius = .003  # Radius, r, in millimeters
     indent_depth = 1.21  # Indent depth, h, in millimeters
 
     if file_or_dir == 'file':
