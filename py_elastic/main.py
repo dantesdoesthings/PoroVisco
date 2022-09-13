@@ -70,7 +70,11 @@ if __name__ == '__main__':
     main()
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 print("Victory! Your results are saved in this code's file unless otherwise altered.")
+=======
+print("Success!")
+>>>>>>> 3fecd2c122bb49b5f49a635c05a33859190f716c
 =======
 print("Success!")
 >>>>>>> 3fecd2c122bb49b5f49a635c05a33859190f716c
