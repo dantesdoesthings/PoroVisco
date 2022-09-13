@@ -1,4 +1,10 @@
 import numpy as np
+from scipy.optimize import least_squares
+import pandas as pd
+
+import json
+
+import numpy as np
 import scipy.stats as sp
 import pandas as pd
 from scipy.optimize import least_squares, curve_fit
@@ -7,13 +13,14 @@ from matplotlib.figure import Figure
 
 
 def read_input(input_file_name: str):
-    skip_rows = list(range(52)) + list(range(53, 105))  # Which rows to skip ADJUSTED TO FOR 9.17.20 (Removed)
+    skip_rows = list(range(52)) + list(range(53, 105))  # Which rows to skip
     col_names_original = ['Elapsed Time ', 'Load 2 ', 'Disp     ']
     col_names_rename = {
         'Elapsed Time ': 'elapsed',
         'Load 2 ': 'load',
         'Disp     ': 'disp'
     }
+    col_names_new = ['elapsed', 'load', 'disp']
 
     # Pull in the data
     data = pd.read_csv(input_file_name, skiprows=skip_rows, usecols=col_names_original)
@@ -25,7 +32,6 @@ def read_input(input_file_name: str):
     return data['elapsed'].values, data['load'].values, data['disp'].values
 
 
-<<<<<<< HEAD
 def poro_visco_elastic_model(elapsed: np.ndarray,
                              load: np.ndarray,
                              disp: np.ndarray,
@@ -71,19 +77,17 @@ def poro_visco_elastic_model(elapsed: np.ndarray,
     upper_bound2 = [1, 1, 1, 1, 1]
 
     # Opt run
+    x0 = np.concatenate([x01, x02])
     x_guess = np.concatenate([xg1, xg2])
     lower_bound = np.concatenate([lower_bound1, lower_bound2])
     upper_bound = np.concatenate([upper_bound1, upper_bound2])
-    x0 = (lower_bound + upper_bound)/2 #Redefined upper bounds and lower bounds to be averaged (remove x0 bound error)
     # print(type(x0), type(elapsed), type(load), type(disp), type(x_guess), type(ramp_time), type(hmax), type(av), type(m), type(radius))
     # options.optim = optimset('MaxFunEvals', 500000, 'Display', 'none', 'TolX', 1E-30);
     # X = lsqnonlin( @ OBJPoroVisco_mri, X0, LB, UB, options.optim, DT, Xguess, rampTime, hmax, av, m, R);
-    #ERICA ERROR LOG: "Each lower bound must be less than 0". Zeros in data from lack of force, change in data file to -0.0001
     opt_result = least_squares(poro_visco_optimization, x0, bounds=[lower_bound, upper_bound],
                                args=[elapsed, load, x_guess, ramp_time, hmax, av, m, radius],
                                max_nfev=500000, xtol=1e-30)
     exp_decay_result, _ = curve_fit(exp_decay_function, elapsed, load, bounds=(0, [np.inf, np.inf, 2 * load[-1]]))
-    print(exp_decay_result)
     x = opt_result.x
 
     # Poroelastic parameter estimation
@@ -198,8 +202,6 @@ def poro_visco_optimization(x,
     return err_vect
 
 
-=======
->>>>>>> 3fecd2c122bb49b5f49a635c05a33859190f716c
 def exp_decay_function(x: np.ndarray, a: float, b: float, c: float):
     result = a * np.exp(-b * x) + c
     return result
@@ -207,6 +209,7 @@ def exp_decay_function(x: np.ndarray, a: float, b: float, c: float):
 
 def plot_results(time_vals: np.ndarray,
                  point_data: np.ndarray,
+                 line_data: np.ndarray,
                  exp_decay_result: np.ndarray,
                  show_plot: bool = False,
                  save_plot: bool = False,
@@ -217,6 +220,7 @@ def plot_results(time_vals: np.ndarray,
     p1.set_ylabel('load')
     p1.set_xlabel('elapsed time')
     p1.plot(time_vals, point_data, 'o', color='#004466', label='original data')
+    p1.plot(time_vals, line_data, '-g', label='logarithmic fit (original)')
     p1.plot(time_vals, exp_decay_function(time_vals, *exp_decay_result), '-r', label='exponential decay fit')
     p1.legend()
     if exp_fit:
@@ -228,14 +232,13 @@ def plot_results(time_vals: np.ndarray,
         plt.show()
 
 
-def run_analysis_for_file(
+def run_analysis_for_file_depr(
         input_file_name: str,
         output_file_name: str,
         show_figure: bool = False,
         save_figure: bool = False,
         figure_file_name: str = None,
-        radius: float = 5.5,
-        indent_depth: float = 1.21
+        radius: float = 5.5
 ):
     # Start calculations
     # Separate the ramp and relax times
@@ -259,62 +262,28 @@ def run_analysis_for_file(
               'D (m^2/s)',
               'R-SQ, PORO',
               'R-SQ, PVE']
-    f_0, f_inf, e_0, e_inf, exp_decay = find_e_vals(
-        elapsed, load, disp, radius, indent_depth)
+    pp1, pp2, fit, exp_decay = poro_visco_elastic_model(
+        elapsed, load, disp,
+        radius, ramp_time, hold_time)
 
     # Gather and save the results
     result_df1 = pd.DataFrame({
-        'F0': f_0,
-        'E0 (kPa)': e_0,
-        'F_inf': f_inf,
-        'E_inf (kPa)': e_inf,
+        'G0 (kPa)': pp1[0],
+        'E0 (kPa)': pp1[1],
+        'Ginf (kPa)': pp1[2],
+        'Einf (kPa)': pp1[3],
+        'Ginf/G0': pp1[4],
+        'T1': pp1[5],
+        'T2': pp1[6],
+        'R-SQ, VISCO': pp1[7],
+        'G (kPa)': pp2[0],
+        'E (kPa)': pp2[1],
+        'nu': pp2[2],
+        'k (m^2)': pp2[3],
+        'D (m^2/s)': pp2[4],
+        'R-SQ, PORO': pp2[5],
+        'R-SQ, PVE': pp2[6]
     }, index=[0])
     result_df1.to_csv(output_file_name, index=None)
-    plot_results(elapsed, load, exp_decay, show_figure, save_figure, figure_file_name)
+    plot_results(elapsed, load, fit, exp_decay, show_figure, save_figure, figure_file_name)
 
-
-def find_e_vals(elapsed: np.ndarray,
-                load: np.ndarray,
-                disp: np.ndarray,
-                radius: float,
-                indent_depth: float):
-    # Find an exponential decay fit
-    exp_decay_result, _ = curve_fit(exp_decay_function, elapsed, load, bounds=(0, [np.inf, np.inf, 2 * load[-1]]))
-    # Convert radius and indent_depth from mm to meters
-    radius *= 1e-3
-    indent_depth *= 1e-3
-    # Find F_0 as the approx displacement from the fit at time=0
-    f_0 = exp_decay_function(elapsed[0], *exp_decay_result)
-    # Find F_inf from the same fit
-    f_inf = exp_decay_result[2]
-    # Use calc_e to find the E values
-    e_0 = calc_e(f_0, radius, indent_depth)
-    e_inf = calc_e(f_inf, radius, indent_depth)
-    return f_0, f_inf, e_0, e_inf, exp_decay_result
-
-
-def calc_e(f, r, h, poisson_ratio=0.5):
-    e_star = 3 * f / (4 * r ** 0.5 * h ** 1.5)
-    e = (1 - poisson_ratio ** 2) * e_star
-    # Convert to KPa from Pa
-    e *= 1e-3
-    return e
-
-
-def serialize(obj):
-
-    # Serialize a numpy array
-    if isinstance(obj, np.ndarray):
-        return obj.tolist()
-
-    # Serialize a numpy matrix
-    if isinstance(obj, np.matrix):
-        return obj.tolist()
-
-    # Attempt to serialize a number
-    try:
-        return float(obj)
-    except Exception:
-        pass
-
-    return obj.__dict__
