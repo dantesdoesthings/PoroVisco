@@ -11,7 +11,7 @@ def main():
     file_or_dir = 'file'   # Set this to 'file' or to 'dir' for file or full directory of CSV files.
 
     # Parameters to set
-    radius = .003  # Radius, r, in millimeters
+    radius = 5.5  # Radius, r, in millimeters
     indent_depth = 1.21  # Indent depth, h, in millimeters
 
     if file_or_dir == 'file':
@@ -69,12 +69,4 @@ def main():
 if __name__ == '__main__':
     main()
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-print("Victory! Your results are saved in this code's file unless otherwise altered.")
-=======
 print("Success!")
->>>>>>> 3fecd2c122bb49b5f49a635c05a33859190f716c
-=======
-print("Success!")
->>>>>>> 3fecd2c122bb49b5f49a635c05a33859190f716c
