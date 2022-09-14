@@ -25,8 +25,7 @@ def read_input(input_file_name: str):
     return data['elapsed'].values, data['load'].values, data['disp'].values
 
 
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 def poro_visco_elastic_model(elapsed: np.ndarray,
                              load: np.ndarray,
                              disp: np.ndarray,
@@ -199,10 +198,6 @@ def poro_visco_optimization(x,
     return err_vect
 
 
-=======
->>>>>>> 3fecd2c122bb49b5f49a635c05a33859190f716c
-=======
->>>>>>> 3fecd2c122bb49b5f49a635c05a33859190f716c
 def exp_decay_function(x: np.ndarray, a: float, b: float, c: float):
     result = a * np.exp(-b * x) + c
     return result
