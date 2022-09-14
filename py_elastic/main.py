@@ -69,5 +69,4 @@ def main():
 if __name__ == '__main__':
     main()
 
-
-print("Victory! Your results are saved in this code's file unless otherwise altered.")
+print("Success!")
