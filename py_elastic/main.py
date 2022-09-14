@@ -12,7 +12,7 @@ def main():
 
     # Parameters to set
     radius = 5.5  # Radius, r, in millimeters
-    indent_depth = 1.21  # Indent depth, h, in millimeters
+    indent_depth = 0.7  # Indent depth, h, in millimeters
 
     if file_or_dir == 'file':
         # Settings
@@ -69,4 +69,4 @@ def main():
 if __name__ == '__main__':
     main()
 
-print("Success!")
+print("Success! Files saved")
