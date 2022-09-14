@@ -8,7 +8,7 @@ from utils import run_analysis_for_file
 
 
 def main():
-    file_or_dir = 'file'   # Set this to 'file' or to 'dir' for file or full directory of CSV files.
+    file_or_dir = 'dir'   # Set this to 'file' or to 'dir' for file or full directory of CSV files.
 
     # Parameters to set
     radius = 5.5  # Radius, r, in millimeters
@@ -30,8 +30,8 @@ def main():
                               radius,
                               indent_depth)
     elif file_or_dir == 'dir':
-        input_dir = Path('C:/dev/repos/personal/EricaMatlab/reference/datasets')
-        output_dir = Path('C:/dev/repos/personal/EricaMatlab/reference/test_output')
+        input_dir = Path('C:/Users/omnen/Documents/Oyen lab/Indentation data/20220811')
+        output_dir = Path('C:/Users/omnen/Documents/Oyen lab/Indentation data/20220811/code results')
         figure_file_name_base = 'fig'
         show_figure = True
         save_figure = True
