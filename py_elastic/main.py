@@ -11,9 +11,10 @@ def main():
     file_or_dir = 'dir'   # Set this to 'file' or to 'dir' for file or full directory of CSV files.
 
     # Parameters to set
-    radius = 5.5  # Radius, r, in millimeters
-    indent_depth = 0.7  # Indent depth, h, in millimeters
+    radius = 6  # Radius, r, in millimeters
+    indent_depth = .7 # Indent depth, h, in millimeters
 
+    #set file path for single file here
     if file_or_dir == 'file':
         # Settings
         input_file_name = Path('../reference/datasets/agae1per1-08232022-011721_tdf.csv')
@@ -29,9 +30,10 @@ def main():
                               figure_file_name,
                               radius,
                               indent_depth)
+    #Set File path and saving path for whole folder
     elif file_or_dir == 'dir':
-        input_dir = Path('C:/Users/omnen/Documents/Oyen lab/Indentation data/20220811')
-        output_dir = Path('C:/Users/omnen/Documents/Oyen lab/Indentation data/20220811/code results')
+        input_dir = Path('C:/Users/omnen/Documents/Oyen lab/Indentation data/madison/20220902/30per')
+        output_dir = Path('C:/Users/omnen/Documents/Oyen lab/Indentation data/madison/20220902/code results')
         figure_file_name_base = 'fig'
         show_figure = True
         save_figure = True
