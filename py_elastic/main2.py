@@ -4,7 +4,7 @@ import os
 
 import pandas as pd
 
-from utils import run_analysis_for_file
+from utils2 import run_analysis_for_file
 
 
 def main():
@@ -12,7 +12,7 @@ def main():
 
     # Parameters to set
     radius = 6  # Radius, r, in millimeters
-    indent_depth = 1.5 # Indent depth, h, in millimeters
+    indent_depth = .5 # Indent depth, h, in millimeters
 
     #set file path for single file here
     if file_or_dir == 'file':
@@ -32,8 +32,8 @@ def main():
                               indent_depth)
     #Set File path and saving path for whole folder
     elif file_or_dir == 'dir':
-        input_dir = Path('C:/Users/omnen/Documents/Oyen lab/Indentation data/20220830/low per')
-        output_dir = Path('C:/Users/omnen/Documents/Oyen lab/Indentation data/20220830/code results')
+        input_dir = Path('C:/Users/omnen/Documents/Oyen lab/Indentation data/20220928 2n')
+        output_dir = Path('C:/Users/omnen/Documents/Oyen lab/Indentation data/20220928 2n/results')
         figure_file_name_base = 'fig'
         show_figure = True
         save_figure = True
