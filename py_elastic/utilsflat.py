@@ -5,13 +5,13 @@ from scipy.optimize import least_squares, curve_fit
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 
-#  Set to load 3 for 250G load cell
+
 def read_input(input_file_name: str):
-    skip_rows = list(range(52)) + list(range(53, 105))  # Which rows to skip
-    col_names_original = ['Elapsed Time ', 'Load 3 ', 'Disp     ']
+    skip_rows = list(range(52)) + list(range(53, 115))  # Which rows to skip
+    col_names_original = ['Elapsed Time ', 'Load 2 ', 'Disp     ']
     col_names_rename = {
         'Elapsed Time ': 'elapsed',
-        'Load 3 ': 'load',
+        'Load 2 ': 'load',
         'Disp     ': 'disp'
     }
 
@@ -20,7 +20,7 @@ def read_input(input_file_name: str):
     # Rename and reorder for easier use and access
     data.rename(columns=col_names_rename, inplace=True)
     # Adjust the data as needed
-    data['load'] /= -101.97
+    data['load'] *= -1
     data['disp'] *= 1e-3
     return data['elapsed'].values, data['load'].values, data['disp'].values
 
@@ -117,9 +117,9 @@ def find_e_vals(elapsed: np.ndarray,
     e_inf = calc_e(f_inf, radius, indent_depth)
     return f_0, f_inf, e_0, e_inf, exp_decay_result
 
-#  actual equasion caluation
+
 def calc_e(f, r, h, poisson_ratio=0.5):
-    e_star = 3 * f*(.01) / (4 * r ** 0.5 * h ** 1.5)
+    e_star =  f /(2 * r * h)
     e = (1 - poisson_ratio ** 2) * e_star
     # Convert to KPa from Pa
     e *= 1e-3

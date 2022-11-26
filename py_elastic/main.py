@@ -1,7 +1,6 @@
 import glob
 from pathlib import Path
 import os
-
 import pandas as pd
 
 from utils import run_analysis_for_file
@@ -12,12 +11,12 @@ def main():
 
     # Parameters to set
     radius = 6  # Radius, r, in millimeters
-    indent_depth = 1.5 # Indent depth, h, in millimeters
+    indent_depth = .5 # Indent depth, h, in millimeters
 
     #set file path for single file here
     if file_or_dir == 'file':
         # Settings
-        input_file_name = Path('../reference/datasets/agae1per1-08232022-011721_tdf.csv')
+        input_file_name = Path('C:/Users/omnen/Documents/Oyen lab/Indentation data/20220811/0.2per alg gel em 08112022 111747_tdf.CSV')
         output_file_name = 'test.csv'
         figure_file_name = 'test.png'
         show_figure = True
@@ -32,8 +31,8 @@ def main():
                               indent_depth)
     #Set File path and saving path for whole folder
     elif file_or_dir == 'dir':
-        input_dir = Path('C:/Users/omnen/Documents/Oyen lab/Indentation data/20220830/low per')
-        output_dir = Path('C:/Users/omnen/Documents/Oyen lab/Indentation data/20220830/code results')
+        input_dir = Path('C:/Users/omnen/Documents/Oyen lab/Indentation data)
+        output_dir = Path('C:/Users/omnen/Documents/Oyen lab/Indentation data/20221108 2n alg/results')
         figure_file_name_base = 'fig'
         show_figure = True
         save_figure = True

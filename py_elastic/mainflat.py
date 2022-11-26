@@ -4,15 +4,15 @@ import os
 
 import pandas as pd
 
-from utils2 import run_analysis_for_file
+from utilsflat import run_analysis_for_file
 
 
 def main():
     file_or_dir = 'dir'   # Set this to 'file' or to 'dir' for file or full directory of CSV files.
 
     # Parameters to set
-    radius = 6  # Radius, r, in millimeters
-    indent_depth = .5 # Indent depth, h, in millimeters
+    radius = 6.25  # Radius, r, in millimeters
+    indent_depth = .7 # Indent depth, h, in millimeters
 
     #set file path for single file here
     if file_or_dir == 'file':
@@ -32,8 +32,8 @@ def main():
                               indent_depth)
     #Set File path and saving path for whole folder
     elif file_or_dir == 'dir':
-        input_dir = Path('C:/Users/omnen/Documents/Oyen lab/Indentation data/20220926 test')
-        output_dir = Path('C:/Users/omnen/Documents/Oyen lab/Indentation data/20220926 test/test results')
+        input_dir = Path('C:/Users/omnen/Documents/Oyen lab/Indentation data/test data/flat and melt')
+        output_dir = Path('C:/Users/omnen/Documents/Oyen lab/Indentation data/test data/flat and melt')
         figure_file_name_base = 'fig'
         show_figure = True
         save_figure = True
