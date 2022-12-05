@@ -17,7 +17,7 @@ def main():
     #set file path for single file here
     if file_or_dir == 'file':
         # Settings
-        input_file_name = Path('../reference/datasets/agae1per1-08232022-011721_tdf.csv')
+        input_file_name = Path('C:/Users/omnen/Documents/Oyen lab/Indentation data/20220926 agar 2n/agar 1per3 09262022 115113_tdf.CSV')
         output_file_name = 'test.csv'
         figure_file_name = 'test.png'
         show_figure = True
@@ -32,8 +32,8 @@ def main():
                               indent_depth)
     #Set File path and saving path for whole folder
     elif file_or_dir == 'dir':
-        input_dir = Path('C:/Users/omnen/Documents/Oyen lab/Indentation data/20220926 test')
-        output_dir = Path('C:/Users/omnen/Documents/Oyen lab/Indentation data/20220926 test/test results')
+        input_dir = Path('C:/Users/omnen/Documents/Oyen lab/Indentation data/20221201')
+        output_dir = Path('C:/Users/omnen/Documents/Oyen lab/Indentation data/20221201/results')
         figure_file_name_base = 'fig'
         show_figure = True
         save_figure = True

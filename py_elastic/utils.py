@@ -21,6 +21,7 @@ def read_input(input_file_name: str):
     data.rename(columns=col_names_rename, inplace=True)
     # Adjust the data as needed
     data['load'] *= -1
+    print(data['load'])
     data['disp'] *= 1e-3
     return data['elapsed'].values, data['load'].values, data['disp'].values
 

@@ -20,7 +20,9 @@ def read_input(input_file_name: str):
     # Rename and reorder for easier use and access
     data.rename(columns=col_names_rename, inplace=True)
     # Adjust the data as needed
-    data['load'] /= -101.97
+    data['load'] /= -101.97  #conversion to posative and Newtons rather than grams (2N cell only)
+    #print(data['load'])
+
     data['disp'] *= 1e-3
     return data['elapsed'].values, data['load'].values, data['disp'].values
 
@@ -39,8 +41,8 @@ def plot_results(time_vals: np.ndarray,
                  exp_fit=None):
     fig = plt.figure()  # type: Figure
     p1 = fig.add_subplot()
-    p1.set_ylabel('load')
-    p1.set_xlabel('elapsed time')
+    p1.set_ylabel('load (N)')
+    p1.set_xlabel('elapsed time(s)')
     p1.plot(time_vals, point_data, 'o', color='#004466', label='original data')
     p1.plot(time_vals, exp_decay_function(time_vals, *exp_decay_result), '-r', label='exponential decay fit')
     p1.legend()
@@ -104,7 +106,7 @@ def find_e_vals(elapsed: np.ndarray,
                 radius: float,
                 indent_depth: float):
     # Find an exponential decay fit
-    exp_decay_result, _ = curve_fit(exp_decay_function, elapsed, load, bounds=(0, [np.inf, np.inf, 2 * load[-1]]))
+    exp_decay_result, _ = curve_fit(exp_decay_function, elapsed, load, bounds=(0, [np.inf, np.inf, 2 * abs(load[-1])]))
     # Convert radius and indent_depth from mm to meters
     radius *= 1e-3
     indent_depth *= 1e-3

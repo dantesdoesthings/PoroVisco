@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="02eb9e9a-e2d6-40bb-b37c-430e3bdc827e" name="Changes" comment="Commit after second file (2n) verified twice">
-      <change afterPath="$PROJECT_DIR$/.idea/PoroVisco.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/py_elastic/mainflat.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/py_elastic/utilsflat.py" afterDir="false" />
+    <list default="true" id="02eb9e9a-e2d6-40bb-b37c-430e3bdc827e" name="Changes" comment="Commit change for g&gt; Newton conversion">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/py_elastic/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/py_elastic/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/py_elastic/main2.py" beforeDir="false" afterPath="$PROJECT_DIR$/py_elastic/main2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/py_elastic/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/py_elastic/utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/py_elastic/utils2.py" beforeDir="false" afterPath="$PROJECT_DIR$/py_elastic/utils2.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -68,7 +62,14 @@
       <option name="project" value="LOCAL" />
       <updated>1664396751323</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Commit change for g&gt; Newton conversion">
+      <created>1669495901974</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1669495901974</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -85,6 +86,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added note annotations" />
     <MESSAGE value="Commit after second file (2n) verified twice" />
-    <option name="LAST_COMMIT_MESSAGE" value="Commit after second file (2n) verified twice" />
+    <MESSAGE value="Commit change for g&gt; Newton conversion" />
+    <option name="LAST_COMMIT_MESSAGE" value="Commit change for g&gt; Newton conversion" />
   </component>
 </project>
